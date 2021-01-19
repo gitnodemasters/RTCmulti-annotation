@@ -78,7 +78,7 @@
             text-shadow: 1px 1px white;
         }
 
-        #other-videos {
+        /* #other-videos {
             margin-top: 5px;
         }
 
@@ -88,7 +88,7 @@
             border: 1px solid black;
             padding: 1px;
             border-radius: 3px;
-        }
+        } */
 
         #txt-chat-message {
             width: 100%;
@@ -138,7 +138,7 @@
             background: #E5E5E5;
         }
 
-        #btn-attach-file {
+        /* #btn-attach-file {
             width: 25px;
             vertical-align: middle;
             cursor: pointer;
@@ -150,7 +150,7 @@
             vertical-align: middle;
             cursor: pointer;
             display: none;
-        }
+        } */
 
         .checkmark {
             display: none;
@@ -194,10 +194,10 @@
                 </div>
                 <textarea id="txt-chat-message"></textarea>
                 <button class="btn btn-primary" id="btn-chat-message" disabled>Send</button>
-                <img id="btn-attach-file" src="https://www.webrtc-experiment.com/images/attach-file.png"
+                <!-- <img id="btn-attach-file" src="https://www.webrtc-experiment.com/images/attach-file.png"
                     title="Attach a File">
                 <img id="btn-share-screen" src="https://www.webrtc-experiment.com/images/share-screen.png"
-                    title="Share Your Screen">
+                    title="Share Your Screen"> -->
             </div>
 
             <canvas id="temp-stream-canvas" style="display: none;"></canvas>
@@ -316,7 +316,7 @@
             }
 
             document.getElementById('btn-chat-message').disabled = false;
-            document.getElementById('btn-attach-file').style.display = 'inline-block';
+            // document.getElementById('btn-attach-file').style.display = 'inline-block';
             // document.getElementById('btn-share-screen').style.display = 'inline-block';
         };
 
@@ -392,12 +392,13 @@
                 }
                 video.srcObject = event.stream;
                 $('#main-video').show();
-            } else {
-                event.mediaElement.controls = false;
+            } 
+            // else {
+            //     event.mediaElement.controls = false;
 
-                var otherVideos = document.querySelector('#other-videos');
-                otherVideos.appendChild(event.mediaElement);
-            }
+            //     var otherVideos = document.querySelector('#other-videos');
+            //     otherVideos.appendChild(event.mediaElement);
+            // }
 
             connection.onUserStatusChanged(event);
         };
@@ -519,18 +520,18 @@
             });
         };
 
-        var recentFile;
-        document.getElementById('btn-attach-file').onclick = function () {
-            var file = new FileSelector();
-            file.selectSingleFile(function (file) {
-                recentFile = file;
+        // var recentFile;
+        // document.getElementById('btn-attach-file').onclick = function () {
+        //     var file = new FileSelector();
+        //     file.selectSingleFile(function (file) {
+        //         recentFile = file;
 
-                if (connection.getAllParticipants().length >= 1) {
-                    recentFile.userIndex = 0;
-                    connection.send(file, connection.getAllParticipants()[recentFile.userIndex]);
-                }
-            });
-        };
+        //         if (connection.getAllParticipants().length >= 1) {
+        //             recentFile.userIndex = 0;
+        //             connection.send(file, connection.getAllParticipants()[recentFile.userIndex]);
+        //         }
+        //     });
+        // };
 
         function getFileHTML(file) {
             var url = file.url || URL.createObjectURL(file);
@@ -761,7 +762,7 @@
 
                 // $('#main-video').hide();
                 $('#screen-viewer').hide();
-                $('#btn-share-screen').show();
+                // $('#btn-share-screen').show();
                 replaceTrack(tempStream.getTracks()[0], screenTrackId);
             });
 
@@ -785,33 +786,33 @@
             $('#screen-viewer').show();
         }
 
-        $('#btn-share-screen').click(function () {
-            screen_constraints = connection.getScreenConstraints;
-            if (!window.tempStream) {
-                alert('Screen sharing is not enabled.');
-                return;
-            }
+        // $('#btn-share-screen').click(function () {
+        //     screen_constraints = connection.getScreenConstraints;
+        //     if (!window.tempStream) {
+        //         alert('Screen sharing is not enabled.');
+        //         return;
+        //     }
 
-            $('#btn-share-screen').hide();
+        //     $('#btn-share-screen').hide();
 
-            if (navigator.mediaDevices.getDisplayMedia) {
-                navigator.mediaDevices.getDisplayMedia(screen_constraints).then(stream => {
-                    replaceScreenTrack(stream);
-                }, error => {
-                    alert('Please make sure to use Edge 17 or higher.');
-                });
-            }
-            else if (navigator.getDisplayMedia) {
-                navigator.getDisplayMedia(screen_constraints).then(stream => {
-                    replaceScreenTrack(stream);
-                }, error => {
-                    alert('Please make sure to use Edge 17 or higher.');
-                });
-            }
-            else {
-                alert('getDisplayMedia API is not available in this browser.');
-            }
-        });
+        //     if (navigator.mediaDevices.getDisplayMedia) {
+        //         navigator.mediaDevices.getDisplayMedia(screen_constraints).then(stream => {
+        //             replaceScreenTrack(stream);
+        //         }, error => {
+        //             alert('Please make sure to use Edge 17 or higher.');
+        //         });
+        //     }
+        //     else if (navigator.getDisplayMedia) {
+        //         navigator.getDisplayMedia(screen_constraints).then(stream => {
+        //             replaceScreenTrack(stream);
+        //         }, error => {
+        //             alert('Please make sure to use Edge 17 or higher.');
+        //         });
+        //     }
+        //     else {
+        //         alert('getDisplayMedia API is not available in this browser.');
+        //     }
+        // });
     </script>
 </body>
 
