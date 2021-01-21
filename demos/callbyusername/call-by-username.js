@@ -124,7 +124,7 @@ connection.onstream = function (event) {
   }
 
   // var width = parseInt(connection.videosContainer.clientWidth) - 20;
-  var width = connection.videosContainer.clientWidth;
+  var width = parseInt(connection.videosContainer.clientWidth / 2);
 
   if (event.type === "local") {
     // width = parseInt(connection.videosContainer.clientWidth / 4);
