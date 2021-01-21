@@ -31,7 +31,7 @@ function getHTMLMediaElement(mediaElement, config) {
         return getAudioElement(mediaElement, config);
     }
 
-    var buttons = config.buttons || ['mute-audio', 'mute-video', 'full-screen', 'volume-slider', 'stop'];
+    var buttons = config.buttons || ['mute-audio', 'mute-video', 'full-screen', 'volume-slider', 'stop', 'take-snapshot', 'share-video'];
     buttons.has = function(element) {
         return buttons.indexOf(element) !== -1;
     };
@@ -97,6 +97,16 @@ function getHTMLMediaElement(mediaElement, config) {
 
         takeSnapshot.onclick = function() {
             if (config.onTakeSnapshot) config.onTakeSnapshot();
+        };
+    }
+
+    if (buttons.has('share-video')) {
+        var shareVideo = document.createElement('div');
+        shareVideo.className = 'control share-video';
+        mediaControls.appendChild(shareVideo);
+
+        shareVideo.onclick = function() {
+            if (config.onShareVideo) config.onShareVideo(config.id, config.width);
         };
     }
 
@@ -252,6 +262,11 @@ function getHTMLMediaElement(mediaElement, config) {
     }
 
     mediaBox.appendChild(mediaElement);
+
+    var widgetContainer = document.createElement('div');
+    widgetContainer.className = 'widget-container';
+    widgetContainer.setAttribute("id", config.id);
+    mediaElementContainer.appendChild(widgetContainer);
 
     if (!config.width) config.width = (innerWidth / 2) - 50;
 
