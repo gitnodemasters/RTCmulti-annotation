@@ -4114,4 +4114,25 @@
         }
     };
 
+    function resize(e) {
+        var height = window.innerHeight;
+        var width = window.innerWidth;
+
+        var main_canvas = document.getElementById("main-canvas");
+        var temp_canvas = document.getElementById("temp-canvas");
+
+        main_canvas.style.width = width + 'px';
+        main_canvas.style.height = height + 'px';
+        temp_canvas.style.width = width + 'px';
+        temp_canvas.style.height = height + 'px';
+        main_canvas.width = width;
+        main_canvas.height = height;
+        temp_canvas.width = width;
+        temp_canvas.height = height;
+
+        drawHelper.redraw();
+    }
+
+    window.addEventListener('resize', resize, false);
+
 })();

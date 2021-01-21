@@ -47,16 +47,10 @@ var onShareVideo = function (id, width) {
   // you can place widget.html anywhere
   designer.widgetHtmlURL = "/demos/widget.html";
   designer.widgetJsURL = "/demos/widget.js";
-
+  
+  
   designer.addSyncListener(function (data) {
-    // console.log("++++++++++", data["points"][0][0], data["points"][0][1]);
-    // for (var i = 0; i < 4; i++) {
-    //   data["points"][0][1][i] = parseInt(data["points"][0][1][i] * 0.3);
-    // }
-
-    console.log("++++++++++", data["points"][0][0], data["points"][0][1]);
     connection.send(data);
-    console.log("++++++++++", data["points"][0][0], data["points"][0][1]);
   });
 
   designer.setSelected("pencil");
@@ -103,6 +97,7 @@ var onShareVideo = function (id, width) {
 }
 
 connection.videosContainer = document.getElementById("videos-container");
+
 connection.onstream = function (event) {
   var existing = document.getElementById(event.streamid);
   if (existing && existing.parentNode) {
@@ -124,7 +119,7 @@ connection.onstream = function (event) {
   }
 
   // var width = parseInt(connection.videosContainer.clientWidth) - 20;
-  var width = parseInt(connection.videosContainer.clientWidth / 2);
+  var width = connection.videosContainer.clientWidth;
 
   if (event.type === "local") {
     // width = parseInt(connection.videosContainer.clientWidth / 4);
@@ -142,7 +137,7 @@ connection.onstream = function (event) {
   var mediaElement = getHTMLMediaElement(video, {
     title: event.type,
     buttons: ["share-video", "full-screen"],
-    width: width,
+    width: "100%",
     showOnMouseEnter: true,
     id: event.userid,
     onShareVideo: onShareVideo
@@ -194,7 +189,7 @@ connection.onmessage = function (event) {
     designer.sync();
     return;
   }
-
+  console.log("onmessage", connection.videosContainer.clientWidth);
   designer.syncData(event.data);
 }
 
@@ -234,7 +229,7 @@ currentUserName.onkeyup = currentUserName.onpaste = currentUserName.oninput = fu
 };
 currentUserName.value =
   localStorage.getItem(currentUserName.id) || connection.token();
-console.log("=======", currentUserName.value);
+
 document.getElementById("change-your-own-username").onclick = function () {
   this.disabled = true;
   connection.open(
@@ -256,7 +251,7 @@ calleeUserName.onkeyup = calleeUserName.onpaste = calleeUserName.oninput = funct
 };
 calleeUserName.value =
   localStorage.getItem(calleeUserName.id) || connection.token();
-console.log("=======", calleeUserName.value);
+
 // detect 2G
 if (
   navigator.connection &&
