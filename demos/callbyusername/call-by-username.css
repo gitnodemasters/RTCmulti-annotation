@@ -8,11 +8,8 @@ td {
 
 td:first-child {
   text-align: right;
-  width: 45%;
 }
 
 td:last-child {
   text-align: left;
-  padding-left: 10px;
-  width: 45%;
 }
