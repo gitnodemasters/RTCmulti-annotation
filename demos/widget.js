@@ -4130,9 +4130,12 @@
         temp_canvas.width = width;
         temp_canvas.height = height;
 
+        console.log("resize", width, e.currentTarget.innerWidth);
+
         drawHelper.redraw();
+        console.log("redraw", dragHelper);
     }
 
-    window.addEventListener('resize', resize, false);
+    window.addEventListener('resize', resize);
 
 })();

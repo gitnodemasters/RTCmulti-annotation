@@ -41,16 +41,29 @@ connection.iceServers = [
   },
 ];
 
+var tempWidth = 0;
+
 var onShareVideo = function (id, width) {
   designer = new CanvasDesigner();
 
-  // you can place widget.html anywhere
   designer.widgetHtmlURL = "/demos/widget.html";
-  designer.widgetJsURL = "/demos/widget.js";
-  
-  
+  designer.widgetJsURL = "/demos/widget.js";  
   designer.addSyncListener(function (data) {
+    tempWidth = document.getElementById("videos-container").clientWidth;
+    if (data["points"][0][0] === "arc") {
+      len = 3;
+    } else {
+      len = 4;
+    }
+
+    for (var i = 0; i < data["points"].length; i++) {
+      for (var j = 0; j < len; j++) {
+        data["points"][i][1][j] = parseInt(data["points"][i][1][j] * (1000 / tempWidth));
+      }
+    }
+
     connection.send(data);
+    
   });
 
   designer.setSelected("pencil");
@@ -93,10 +106,12 @@ var onShareVideo = function (id, width) {
   
   setTimeout(function () {
     connection.send('plz-sync-points');
-}, 1000);
+  }, 1000);
 }
 
 connection.videosContainer = document.getElementById("videos-container");
+// var width0 = connection.videosContainer.clientWidth;
+// console.log("width0", width0);
 
 connection.onstream = function (event) {
   var existing = document.getElementById(event.streamid);
@@ -136,7 +151,7 @@ connection.onstream = function (event) {
 
   var mediaElement = getHTMLMediaElement(video, {
     title: event.type,
-    buttons: ["share-video", "full-screen"],
+    buttons: ["share-video", "full-screen", "take-snapshot"],
     width: "100%",
     showOnMouseEnter: true,
     id: event.userid,
@@ -189,7 +204,20 @@ connection.onmessage = function (event) {
     designer.sync();
     return;
   }
-  console.log("onmessage", connection.videosContainer.clientWidth);
+
+  tempWidth = document.getElementById("videos-container").clientWidth; 
+  if (event.data["points"][0][0] === "arc") {
+    len = 3;
+  } else {
+    len = 4;
+  }
+
+  for (var i = 0; i < event.data["points"].length; i++) {
+    for (var j = 0; j < len; j++) {
+      event.data["points"][i][1][j] = parseInt(event.data["points"][i][1][j] * (tempWidth / 1000));
+    }
+  }
+
   designer.syncData(event.data);
 }
 
