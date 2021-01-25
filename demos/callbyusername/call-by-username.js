@@ -109,6 +109,25 @@ var onShareVideo = function (id, width) {
   }, 1000);
 }
 
+var onTakeSnapshot = function (){
+
+  var video = document.querySelector('video');
+  var canvas = document.createElement('canvas');
+  canvas.width = video.videoWidth || video.clientWidth;
+  canvas.height = video.videoHeight || video.clientHeight;
+
+  var context = canvas.getContext('2d');
+  context.drawImage(video, 0, 0, canvas.width, canvas.height);
+  Canvas2Image.saveAsPNG(canvas);
+  var screencanvas = document.querySelector('.widget-container iframe').contentDocument.body;
+  html2canvas(screencanvas, {
+    onrendered: function(tempcanvas) {
+      return Canvas2Image.saveAsPNG(tempcanvas);;
+    }
+  });
+
+}
+
 connection.videosContainer = document.getElementById("videos-container");
 // var width0 = connection.videosContainer.clientWidth;
 // console.log("width0", width0);
@@ -155,7 +174,8 @@ connection.onstream = function (event) {
     width: "100%",
     showOnMouseEnter: true,
     id: event.userid,
-    onShareVideo: onShareVideo
+    onShareVideo: onShareVideo,
+    onTakeSnapshot:onTakeSnapshot,
   });
 
   connection.videosContainer.appendChild(mediaElement);
