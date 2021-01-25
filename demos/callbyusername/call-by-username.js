@@ -170,7 +170,7 @@ connection.onstream = function (event) {
 
   var mediaElement = getHTMLMediaElement(video, {
     title: event.type,
-    buttons: ["share-video", "full-screen", "take-snapshot"],
+    buttons: ["share-video", "take-snapshot"],
     width: "100%",
     showOnMouseEnter: true,
     id: event.userid,
