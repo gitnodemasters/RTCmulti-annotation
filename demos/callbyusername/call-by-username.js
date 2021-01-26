@@ -122,8 +122,11 @@ var onTakeSnapshot = function (){
   var queue  = html2obj.parse();
   var tempcanvas = html2obj.render(queue);
   var today = new Date();
+  var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+  var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+  var dateTime = date+' '+time;
   context.drawImage(tempcanvas, 0, 0);
-  Canvas2Image.saveAsPNG(canvas,canvas.width, canvas.height, "annotation"+today);
+  Canvas2Image.saveAsPNG(canvas,canvas.width, canvas.height, "Annotations_"+ dateTime);
 
 }
 
