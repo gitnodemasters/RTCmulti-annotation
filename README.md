@@ -9,9 +9,9 @@
 * https://github.com/gitnodemasters/RTCmulti-annotation.git
 
 # or clone from github
-git clone https://github.com/muaz-khan/RTCMultiConnection.git ./
+git clone https://github.com/gitnodemasters/RTCmulti-annotation.git
 
 npm install
 
-node server --port=9001
+node server
 ```

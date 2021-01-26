@@ -2946,7 +2946,7 @@
                     cache.lineWidth = lineWidth;
                     cache.globalCompositeOperation = globalCompositeOperation;
                     globalCompositeOperation = 'destination-out';
-                    lineWidth = 10;
+                    lineWidth = 5;
                 } else if (cache.strokeStyle && cache.fillStyle && typeof cache.lineWidth !== 'undefined') {
                     strokeStyle = cache.strokeStyle;
                     fillStyle = cache.fillStyle;

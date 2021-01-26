@@ -47,7 +47,8 @@ var onShareVideo = function (id, width) {
   designer = new CanvasDesigner();
 
   designer.widgetHtmlURL = "/demos/widget.html";
-  designer.widgetJsURL = "/demos/widget.js";  
+  designer.widgetJsURL = "/demos/widget.js";
+  
   designer.addSyncListener(function (data) {
     tempWidth = document.getElementById("videos-container").clientWidth;
     if (data["points"][0][0] === "arc") {
@@ -61,6 +62,8 @@ var onShareVideo = function (id, width) {
         data["points"][i][1][j] = parseInt(data["points"][i][1][j] * (1000 / tempWidth));
       }
     }
+
+    console.log("data", data);
     connection.send(data);
     
   });
@@ -241,7 +244,7 @@ connection.onmessage = function (event) {
       event.data["points"][i][1][j] = parseInt(event.data["points"][i][1][j] * (tempWidth / 1000));
     }
   }
-
+  console.log("listen", event.data);
   designer.syncData(event.data);
 }
 
