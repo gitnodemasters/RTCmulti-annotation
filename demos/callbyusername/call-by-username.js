@@ -113,18 +113,17 @@ var onTakeSnapshot = function (){
 
   var video = document.querySelector('video');
   var canvas = document.createElement('canvas');
-  canvas.width = video.videoWidth || video.clientWidth;
-  canvas.height = video.videoHeight || video.clientHeight;
-
+  var screencanvas = document.querySelector('.widget-container iframe').contentDocument.body;
+  canvas.width = screencanvas.videoWidth || screencanvas.clientWidth;
+  canvas.height = screencanvas.videoHeight || screencanvas.clientHeight;
   var context = canvas.getContext('2d');
   context.drawImage(video, 0, 0, canvas.width, canvas.height);
+  var html2obj = html2canvas(screencanvas);
+  var queue  = html2obj.parse();
+  var tempcanvas = html2obj.render(queue);
+  
+  context.drawImage(tempcanvas, 0, 0);
   Canvas2Image.saveAsPNG(canvas);
-  var screencanvas = document.querySelector('.widget-container iframe').contentDocument.body;
-  html2canvas(screencanvas, {
-    onrendered: function(tempcanvas) {
-      return Canvas2Image.saveAsPNG(tempcanvas);;
-    }
-  });
 
 }
 
