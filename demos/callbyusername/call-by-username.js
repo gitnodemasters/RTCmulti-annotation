@@ -82,7 +82,7 @@ var onShareVideo = function (id, width) {
     rectangle: true,
     quadratic: false,
     bezier: false,
-    marker: false,
+    marker: true,
     zoom: false,
     lineWidth: false,
     colorsPicker: false,
