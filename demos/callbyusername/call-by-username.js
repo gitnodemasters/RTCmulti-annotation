@@ -43,12 +43,14 @@ connection.iceServers = [
 
 var tempWidth = 0;
 
+// share the screen to draw annotation on that
 var onShareVideo = function (id, width) {
   designer = new CanvasDesigner();
 
   designer.widgetHtmlURL = "/demos/widget.html";
   designer.widgetJsURL = "/demos/widget.js";
 
+  // send the drawing data
   designer.addSyncListener(function (data) {
     tempWidth = document.getElementById("videos-container").clientWidth;
     if (data["points"][0][0] === "arc") {
@@ -110,6 +112,7 @@ var onShareVideo = function (id, width) {
   }, 1000);
 }
 
+// take the snapshot of the annotated screen
 var onTakeSnapshot = function (){
 
   var video = document.querySelector('video');
@@ -153,11 +156,9 @@ connection.onstream = function (event) {
     video.setAttribute("playsinline", true);
   }
 
-  // var width = parseInt(connection.videosContainer.clientWidth) - 20;
   var width = connection.videosContainer.clientWidth;
 
   if (event.type === "local") {
-    // width = parseInt(connection.videosContainer.clientWidth / 4);
     video.volume = 0;
     try {
       video.setAttributeNode(document.createAttribute("muted"));
@@ -220,6 +221,7 @@ connection.onMediaError = function (e) {
   }
 };
 
+// receive and sync the drawing data
 connection.onmessage = function (event) {
   if (event.data === "plz-sync-points") {
     if (designer === null) {
