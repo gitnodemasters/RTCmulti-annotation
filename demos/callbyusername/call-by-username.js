@@ -121,9 +121,9 @@ var onTakeSnapshot = function (){
   var html2obj = html2canvas(screencanvas);
   var queue  = html2obj.parse();
   var tempcanvas = html2obj.render(queue);
-  
+  var today = new Date();
   context.drawImage(tempcanvas, 0, 0);
-  Canvas2Image.saveAsPNG(canvas);
+  Canvas2Image.saveAsPNG(canvas,canvas.width, canvas.height, "annotation"+today);
 
 }
 
