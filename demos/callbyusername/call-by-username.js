@@ -61,7 +61,6 @@ var onShareVideo = function (id, width) {
         data["points"][i][1][j] = parseInt(data["points"][i][1][j] * (1000 / tempWidth));
       }
     }
-
     connection.send(data);
     
   });
@@ -71,7 +70,7 @@ var onShareVideo = function (id, width) {
   designer.setTools({
     dragSingle: true,
     pencil: true,
-    text: true,
+    text: false,
     image: false,
     pdf: false,
     eraser: true,
@@ -230,7 +229,6 @@ connection.onmessage = function (event) {
     designer.sync();
     return;
   }
-
   tempWidth = document.getElementById("videos-container").clientWidth; 
   if (event.data["points"][0][0] === "arc") {
     len = 3;
@@ -270,7 +268,7 @@ joinCalleeUsingHisUsername.onclick = function () {
       }
     });
   });
-  console.log("sssssssss", connection);
+  console.log("connection", connection);
   setTimeout(function () {
     joinCalleeUsingHisUsername.disabled = false;
   }, 1000);
