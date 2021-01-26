@@ -1,5 +1,3 @@
-// https://tonicdev.com/npm/rtcmulticonnection
-
 var RTCMultiConnection;
 
 try {

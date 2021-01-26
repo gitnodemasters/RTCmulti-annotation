@@ -48,7 +48,7 @@ var onShareVideo = function (id, width) {
 
   designer.widgetHtmlURL = "/demos/widget.html";
   designer.widgetJsURL = "/demos/widget.js";
-  
+
   designer.addSyncListener(function (data) {
     tempWidth = document.getElementById("videos-container").clientWidth;
     if (data["points"][0][0] === "arc") {
@@ -63,7 +63,6 @@ var onShareVideo = function (id, width) {
       }
     }
 
-    console.log("data", data);
     connection.send(data);
     
   });
@@ -133,8 +132,6 @@ var onTakeSnapshot = function (){
 }
 
 connection.videosContainer = document.getElementById("videos-container");
-// var width0 = connection.videosContainer.clientWidth;
-// console.log("width0", width0);
 
 connection.onstream = function (event) {
   var existing = document.getElementById(event.streamid);
@@ -244,7 +241,6 @@ connection.onmessage = function (event) {
       event.data["points"][i][1][j] = parseInt(event.data["points"][i][1][j] * (tempWidth / 1000));
     }
   }
-  console.log("listen", event.data);
   designer.syncData(event.data);
 }
 
@@ -264,14 +260,13 @@ joinCalleeUsingHisUsername.onclick = function () {
       return;
     }
 
-    // console.log("+++++++++", username, roomid);
     connection.join(username, function (isRoomJoined, roomid, error) {
       if (error) {
         alert(error);
       }
     });
   });
-  console.log("connection", connection);
+
   setTimeout(function () {
     joinCalleeUsingHisUsername.disabled = false;
   }, 1000);
