@@ -221,6 +221,10 @@ connection.onMediaError = function (e) {
 
 connection.onmessage = function (event) {
   if (event.data === "plz-sync-points") {
+    if (designer === null) {
+      return;
+    }
+    
     designer.sync();
     return;
   }
